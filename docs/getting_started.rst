@@ -23,9 +23,6 @@ You can get Discord.Net from NuGet:
 
 If you have trouble installing from NuGet, try installing dependencies manually.
 
-.. warning::
-	
-	The latest versions of Discord.Net on NuGet are outdated, and you may run into performance issues. It is reccomended that you pull the latest source from `GitHub`_
 
 You can also pull the latest source from `GitHub`_ 
 
