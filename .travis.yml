@@ -1,0 +1,42 @@
+language: generic
+
+addons:
+  apt:
+    packages:
+    - gettext
+    - libcurl4-openssl-dev
+    - libicu-dev
+    - libssl-dev
+    - libunwind8
+    - zlib1g
+
+before_install:
+  # Setup env
+  - export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129"
+  - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
+
+  # Install Dotnet CLI
+  - mkdir $DOTNET_INSTALL_DIR
+  - curl -L $DOTNET_SDK_URL -o dotnet_package
+  - tar -xvzf dotnet_package -C $DOTNET_INSTALL_DIR
+
+  # Add Dotnet to PATH
+  - export PATH=$"$DOTNET_INSTALL_DIR:$PATH"
+
+install:
+  # Display dotnet version
+  - which dotnet;
+    if [ $? -eq 0 ]; then
+      echo "Using dotnet:";
+      dotnet --info;
+    else
+      echo "dotnet not found";
+      exit 1;
+    fi
+  
+  # Restore Dependencies
+  - dotnet restore
+
+  # Build Packages
+  - dotnet pack -c Release -o artifacts src/Discord.Net
+  - dotnet pack -c Release -o artifacts src/Discord.Net.Commands
